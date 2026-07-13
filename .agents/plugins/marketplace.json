@@ -8,7 +8,7 @@
       "name": "work-skill",
       "source": {
         "source": "local",
-        "path": "./plugins/work-skill"
+        "path": "./"
       },
       "policy": {
         "installation": "AVAILABLE",

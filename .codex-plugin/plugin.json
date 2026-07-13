@@ -1,7 +1,7 @@
 {
   "name": "work-skill",
-  "version": "0.1.0",
-  "description": "Curated Codex skills for naming, multilingual coding style, and Chinese Conventional Commits.",
+  "version": "0.2.0",
+  "description": "Portable Agent Skills for naming, multilingual coding style, and Chinese Conventional Commits.",
   "author": {
     "name": "张松河",
     "url": "https://github.com/zsh2722"
@@ -11,6 +11,7 @@
   "license": "MIT",
   "keywords": [
     "codex",
+    "agent-skills",
     "skill",
     "naming",
     "coding-style",
@@ -19,8 +20,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Work Skill",
-    "shortDescription": "代码命名、编码规范与中文 Git 提交工作流",
-    "longDescription": "提供面向 C、C++、Java、Kotlin、Dart、Go 和 Python 的命名与代码规范，并支持安全的中文 Conventional Commit 工作流。",
+    "shortDescription": "跨 Agent 的代码命名、编码规范与中文 Git 提交工作流",
+    "longDescription": "以开放 Agent Skills 格式提供面向 C、C++、Java、Kotlin、Dart、Go 和 Python 的命名与代码规范，并支持安全的中文 Conventional Commit 工作流。",
     "developerName": "张松河",
     "category": "Productivity",
     "capabilities": [],

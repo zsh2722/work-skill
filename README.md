@@ -1,6 +1,6 @@
 # Work Skill
 
-面向 Codex 的可安装 Skill 集合，提供命名审查、多语言编码规范和中文 Conventional Commit 工作流。
+基于 [Agent Skills](https://agentskills.io/specification) 开放格式的通用 Skill 集合，可供支持 `SKILL.md` 的 AI 编程工具使用。Codex 插件仅作为可选安装入口，所有工具共用根目录 `skills/` 下的唯一 Skill 源码。
 
 ## Included Skills
 
@@ -12,33 +12,60 @@
 
 ## Install
 
-在已安装 Codex CLI 的环境中添加 marketplace：
+### Cross-agent CLI
+
+安装 [skills CLI](https://github.com/vercel-labs/skills) 后，交互式选择目标工具与要安装的 Skill：
 
 ```bash
-codex plugin marketplace add zsh2722/work-skill --ref main
+npx skills add zsh2722/work-skill
 ```
 
-再安装插件：
+也可以一次安装全部 Skill，并明确指定多个目标工具：
 
 ```bash
-codex plugin add work-skill@work-skill
+npx skills add zsh2722/work-skill --skill '*' -a codex -a claude-code
 ```
 
-安装完成后，新建一个 Codex task，并以 `$naming-conventions`、`$language-coding-style` 或 `$git-commit-zh` 调用对应 Skill。
+### GitHub CLI
+
+使用 GitHub CLI 安装到指定工具的用户级目录：
+
+```bash
+gh skill install zsh2722/work-skill --all --agent codex --scope user
+```
+
+将 `codex` 改为对应工具名称，或使用 `--dir <目录>` 指向自定义 Skill 目录。
+
+### Manual
+
+克隆仓库后，将所需的 `skills/<skill-name>/` 整个目录复制或软链接到目标工具的 Skill 目录。Skill 目录中的 `SKILL.md` 是唯一必需文件，`agents/`、`references/` 等内容应一并保留。
 
 ## Update
 
+通过 skills CLI 安装的用户可拉取更新：
+
 ```bash
-codex plugin marketplace upgrade work-skill
+npx skills update
+```
+
+## Optional Codex Plugin
+
+Codex 用户可选择原生 marketplace 安装：
+
+```bash
+codex plugin marketplace add zsh2722/work-skill --ref main
 codex plugin add work-skill@work-skill
 ```
 
 ## Repository Layout
 
 ```text
-.agents/plugins/marketplace.json       # 可发现、可安装的插件目录
-plugins/work-skill/.codex-plugin/      # 插件清单
-plugins/work-skill/skills/             # 三个独立且可触发的 Skill
+skills/                               # 跨工具的唯一 Skill 源码
+├── naming-conventions/
+├── language-coding-style/
+└── git-commit-zh/
+.codex-plugin/plugin.json             # 可选 Codex 插件清单
+.agents/plugins/marketplace.json      # 可选 Codex marketplace 目录
 ```
 
 ## License
