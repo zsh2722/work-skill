@@ -1,0 +1,20 @@
+{
+  "name": "work-skill",
+  "interface": {
+    "displayName": "Work Skill"
+  },
+  "plugins": [
+    {
+      "name": "work-skill",
+      "source": {
+        "source": "local",
+        "path": "./plugins/work-skill"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

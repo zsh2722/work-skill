@@ -1,0 +1,34 @@
+{
+  "name": "work-skill",
+  "version": "0.1.0",
+  "description": "Curated Codex skills for naming, multilingual coding style, and Chinese Conventional Commits.",
+  "author": {
+    "name": "张松河",
+    "url": "https://github.com/zsh2722"
+  },
+  "homepage": "https://github.com/zsh2722/work-skill",
+  "repository": "https://github.com/zsh2722/work-skill",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "skill",
+    "naming",
+    "coding-style",
+    "git-commit"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Work Skill",
+    "shortDescription": "代码命名、编码规范与中文 Git 提交工作流",
+    "longDescription": "提供面向 C、C++、Java、Kotlin、Dart、Go 和 Python 的命名与代码规范，并支持安全的中文 Conventional Commit 工作流。",
+    "developerName": "张松河",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/zsh2722/work-skill",
+    "defaultPrompt": [
+      "Use $naming-conventions to review these identifiers and suggest clearer names.",
+      "Use $language-coding-style to review this code change for style issues.",
+      "Use $git-commit-zh to create a Chinese Conventional Commit for this work."
+    ]
+  }
+}

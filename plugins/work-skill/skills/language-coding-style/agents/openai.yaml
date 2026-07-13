@@ -1,0 +1,4 @@
+interface:
+  display_name: "Language Coding Style"
+  short_description: "Enforce practical language code style"
+  default_prompt: "Use $language-coding-style to review this diff for practical naming, API, formatting, and language-specific style issues."

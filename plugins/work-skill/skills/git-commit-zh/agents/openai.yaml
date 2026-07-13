@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit Zh"
+  short_description: "Create safe Chinese Conventional Commits"
+  default_prompt: "Use $git-commit-zh to split this work into logical commits and create clear Chinese Conventional Commit messages."

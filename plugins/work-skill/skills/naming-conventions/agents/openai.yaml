@@ -1,0 +1,4 @@
+interface:
+  display_name: "Naming Conventions"
+  short_description: "Review and improve code identifier names"
+  default_prompt: "Use $naming-conventions to review these identifiers and suggest clearer, more natural names."
