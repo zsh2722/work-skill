@@ -67,6 +67,28 @@ Prefer multiple commits when:
 - Build/tooling changes are mixed with application logic.
 - The commit message would need "and" to describe unrelated outcomes.
 
+### Commit Boundaries
+
+Determine commit boundaries by logical intent, not file count, directory structure, or diff size.
+
+- Create one commit when its files together implement one complete behavior change, bug fix, refactor, documentation update, or build change.
+- Include tests, fixtures, migrations, documentation, and configuration in the same commit when they directly validate, enable, or explain that change.
+- Split independent features, unrelated cleanup, dependency upgrades, generated output, broad formatting, and behavior-preserving refactors into separate commits.
+- Keep each commit buildable and reviewable when practical. Do not split tightly coupled changes if an intermediate commit would be broken, misleading, or impossible to verify.
+- If one file contains multiple independent changes, stage only the relevant hunks when safe. Otherwise, ask before creating a mixed-purpose commit.
+- Treat a commit subject that requires "and", "同时", or multiple unrelated scopes as a signal to reconsider the grouping.
+
+### Large Feature Workflow
+
+For a large requirement, create a commit plan before staging. Prefer vertical, independently verifiable increments:
+
+1. Isolate prerequisite refactors without behavior changes.
+2. Add one coherent feature slice with its required tests.
+3. Add follow-up feature slices only when each has a clear user-visible or technical boundary.
+4. Add independent migration, build, or documentation changes separately.
+
+Do not create artificial micro-commits solely to reduce diff size. A large commit is acceptable when all changed files are necessary for one coherent, testable outcome.
+
 Use this planning format when the grouping is not obvious:
 
 ```text
