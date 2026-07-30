@@ -1,4 +1,4 @@
 interface:
   display_name: "Java Design Patterns"
-  short_description: "Choose and apply modern Java design patterns"
-  default_prompt: "Use $java-design-patterns to choose the smallest suitable pattern for this Java design or refactoring problem, explain the trade-offs, and show a modern implementation."
+  short_description: "Assess Java design and apply patterns only when useful"
+  default_prompt: "Use $java-design-patterns to assess this Java design, refactoring, or optimization problem and apply a pattern only when it solves a concrete issue."

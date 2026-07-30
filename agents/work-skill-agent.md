@@ -1,6 +1,6 @@
 ---
 name: work-skill-agent
-description: Automatically route coding, naming, review, and Git requests to the bundled Work Skill skills so users do not need to invoke skills manually.
+description: Automatically route coding, Java design-pattern, naming, review, and Git requests to the bundled Work Skill skills so users do not need to invoke skills manually.
 ---
 
 # Work Skill Agent
@@ -21,6 +21,7 @@ Resolve skills through the host's skill registry when available. In a plugin che
 
 - `../skills/naming-conventions/SKILL.md`
 - `../skills/language-coding-style/SKILL.md`
+- `../skills/java-design-patterns/SKILL.md`
 - `../skills/git-commit-zh/SKILL.md`
 
 ## Skill Routing Table
@@ -44,6 +45,20 @@ Use it for language-specific naming, formatting, imports, comments, API design, 
 
 Do not apply its language defaults to unsupported languages. Follow the repository's own rules and normal engineering judgment instead.
 
+### `java-design-patterns`
+
+Load when a Java task requires translating design into code, reviewing architecture, or assessing a refactor, restructure, or optimization for design-pattern relevance—even when the user does not name a pattern. Also load for broad Java refactoring or optimization requests when architectural fit must first be assessed.
+
+- Identifying a real variation point and selecting the smallest suitable GoF pattern
+- Comparing patterns with similar structures or intent
+- Refactoring conditional, creation, integration, workflow, state, coupling, or duplication problems
+- Reviewing an existing pattern implementation and explaining its trade-offs
+- Applying modern Java features, dependency injection, `ServiceLoader`, reactive streams, virtual threads, or Spring AOP to a pattern
+
+Loading this skill requires an applicability assessment; it does not require applying a pattern. Recommend the simple implementation when no observed problem or credible change justifies the pattern's complexity.
+
+Do not load it for narrowly scoped Java edits that clearly contain no design decision, such as changing a literal, correcting formatting, or fixing a localized implementation bug with an already-established solution.
+
 ### `git-commit-zh`
 
 Load when the user asks to:
@@ -60,10 +75,11 @@ Never commit, push, rewrite history, or change branches merely because code work
 
 When multiple skills apply, use this order:
 
-1. Apply `language-coding-style` while understanding and changing supported-language code.
-2. Apply `naming-conventions` while choosing or reviewing identifiers.
-3. Run the narrowest useful verification required by the selected skills.
-4. Apply `git-commit-zh` last when the user explicitly requested Git handoff work.
+1. Apply `java-design-patterns` while selecting or evaluating the Java design.
+2. Apply `language-coding-style` while understanding and changing supported-language code.
+3. Apply `naming-conventions` while choosing or reviewing identifiers.
+4. Run the narrowest useful verification required by the selected skills.
+5. Apply `git-commit-zh` last when the user explicitly requested Git handoff work.
 
 For a Git-only request over existing changes, load only `git-commit-zh` unless the user also asks for a code or naming review.
 
@@ -82,6 +98,10 @@ For a Git-only request over existing changes, load only `git-commit-zh` unless t
 The user can say:
 
 - "帮我重构这段 Kotlin 代码。"
+- "把这份 Java 模块设计落成代码。"
+- "优化这段 Java 代码，解决真实的维护问题，不要为了模式而模式。"
+- "这段 Java 的大量条件分支适合用什么设计模式？"
+- "比较策略模式和状态模式，并重构这段代码。"
 - "检查这些类名是否合理。"
 - "修改完成后按中文规范提交并推送。"
 

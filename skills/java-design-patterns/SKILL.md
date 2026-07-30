@@ -1,6 +1,6 @@
 ---
 name: java-design-patterns
-description: "Practical Java design-pattern knowledge base covering all 23 GoF patterns, selection heuristics, trade-offs, refactoring techniques, and modern Java 21+ implementations with records, sealed types, pattern matching, lambdas, ServiceLoader, Flow, virtual threads, dependency injection, and Spring AOP. Use when choosing, applying, reviewing, teaching, or refactoring Java design patterns."
+description: "Problem-driven Java software design and refactoring guidance covering all 23 GoF patterns, selection heuristics, trade-offs, and modern Java 21+ implementations. Use when turning a Java design into code; reviewing architecture; or refactoring, restructuring, or optimizing Java code involving object creation, branching behavior, integration boundaries, workflows, state, extension points, coupling, or duplication—even when the user does not name a pattern. Trigger this skill to assess suitability, not to force a pattern: apply a pattern only when it solves an observed problem or credible change; otherwise keep or simplify the code."
 ---
 
 <!-- argument-hint: [problem, pattern name, comparison, or chapter number] -->
@@ -17,9 +17,22 @@ description: "Practical Java design-pattern knowledge base covering all 23 GoF p
 - **Problem statement** — identify the changing dimension, recommend the smallest suitable pattern, and explain costs.
 - **Pattern/comparison** — load the relevant chapter(s), e.g. `strategy vs state`.
 - **Chapter** — load `ch01` through `ch24`.
-- **Code review/refactor** — preserve behavior with tests, then move one variation point at a time.
+- **Design-to-code/refactor/optimization** — diagnose the concrete design pressure first, preserve behavior with tests, then change one variation point at a time.
 
-When answering, distinguish timeless pattern intent from modern Java implementation. Never recommend a pattern only because its class diagram can be reproduced.
+When answering, distinguish timeless pattern intent from modern Java implementation. Treat loading this skill as permission to evaluate patterns, not as a requirement to use one.
+
+## Problem-First Gate
+
+Before recommending or implementing a pattern:
+
+1. Name the observed problem: duplication, unstable conditionals, coupled creation, incompatible boundaries, tangled workflows, state-dependent behavior, unsafe shared state, or a demonstrated performance/resource issue.
+2. Identify the real or credible change that makes the current design costly. Do not invent speculative extensibility.
+3. Establish the current behavior with tests; for performance claims, establish a measurement or reproducible bottleneck.
+4. Compare the pattern with the simplest local fix, a standard-library feature, or a modern Java language feature.
+5. Apply the pattern only when it reduces the concrete cost enough to justify added types, indirection, and operational semantics.
+6. If no pattern clears that bar, say so and keep or simplify the code.
+
+Never reproduce a pattern merely because its class diagram fits. Never present structural complexity as optimization without evidence.
 
 ## Core Decision Framework
 
