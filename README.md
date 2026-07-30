@@ -10,6 +10,22 @@
 | `language-coding-style` | 对 C、C++、Java、Kotlin、Dart、Go 和 Python 应用实用的编码与命名规范。 |
 | `git-commit-zh` | 安全地拆分、提交并推送变更，使用中文 Conventional Commit 消息。 |
 
+## Included Agent
+
+| Agent | Purpose |
+| --- | --- |
+| `work-skill-agent` | 自动识别任务并编排仓库内的 Skill，接入者无需记忆 Skill 名称或触发语法。 |
+
+Agent 定义位于 `agents/work-skill-agent.md`，采用 Markdown + YAML frontmatter 格式。支持插件内 Agent 的宿主工具可以在安装后选择 `work-skill-agent`，之后直接描述目标即可：
+
+```text
+帮我重构这段 Kotlin 代码，检查命名，验证后按中文规范提交。
+```
+
+Agent 会按任务自动加载最小必要 Skill，并依次完成编码规范、命名检查、验证和明确授权的 Git 操作。具体规则仍由各自的 `SKILL.md` 维护，Agent 只负责路由与编排。
+
+仅支持 Agent Skills、不支持自定义 Agent 的工具仍可安装并直接使用 `skills/`，不会受此入口影响。
+
 ## Install
 
 ### Cross-agent CLI
@@ -64,6 +80,8 @@ skills/                               # 跨工具的唯一 Skill 源码
 ├── naming-conventions/
 ├── language-coding-style/
 └── git-commit-zh/
+agents/
+└── work-skill-agent.md               # 自动路由并编排上述 Skill
 .codex-plugin/plugin.json             # 可选 Codex 插件清单
 .agents/plugins/marketplace.json      # 可选 Codex marketplace 目录
 ```
