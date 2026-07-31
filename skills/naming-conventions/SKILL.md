@@ -7,6 +7,12 @@ description: Improve and review code identifiers so they are natural, concise, d
 
 Use this skill to choose names that read like production code written by an experienced maintainer. Optimize for domain clarity, local consistency, and API stability over artificial brevity or exhaustive description.
 
+## Core First Principles (元法则)
+
+1. **Ubiquitous Domain Language (业务统一语言)**: Identifiers must map to real-world business domain concepts (What it IS in Business). Never create identifiers that merely describe CPU/runtime buffering or transient execution steps (How Computer Buffers It).
+2. **Entity & State Orthogonality (实体与状态正交)**: Maintain a Single Source of Truth (SSOT) for domain entities. An entity's identity (e.g., `currentSong`) remains constant across its lifecycle; phase transitions must be modeled as State Machine enums, never as concatenated variable names (e.g., avoid `pendingSong`, `preparingSong`).
+3. **Minimal State Scope (状态作用域最小化)**: Class-level fields must only hold persistent, core object state. Never elevate a transient reference used only during a single async callback or operation into a class field.
+
 ## Operating Rules
 
 1. Inspect nearby code before changing names. Preserve established project vocabulary, casing, prefixes, suffixes, and framework conventions.
@@ -20,9 +26,9 @@ Use this skill to choose names that read like production code written by an expe
 
 Apply this sequence:
 
-1. Identify the identifier kind: type, interface, function, method, variable, constant, boolean, collection, event, callback, package, module, file, or test.
-2. Identify the identifier's audience: private local code, module API, public API, generated boundary, test, or user-facing contract.
-3. Identify the concept's domain noun or action verb from surrounding code and requirements.
+1. Validate domain existence: Can this concept be naturally spoken in a domain expert discussion? If not, refactor the underlying abstraction before naming.
+2. Check SSOT and State Orthogonality: Is this a distinct domain entity or merely a state of an existing entity? If it's a state, use a state enum on the primary entity.
+3. Verify scope boundaries: Does this value need class-level persistence, or can it be scoped locally to a method/callback context?
 4. Choose the shortest name that remains unambiguous in its scope.
 5. Apply the language's casing and initialism rules.
 6. Check for false precision: names that describe conditions, implementation steps, framework details, or current call-site context instead of the concept itself.
@@ -44,6 +50,7 @@ Apply this sequence:
 
 Flag or fix these unless local convention requires them:
 
+- State-concatenated variables (`pending<Entity>`, `preparing<Entity>`, `processing<Data>`): Indicative of broken SSOT or missing State Machine design.
 - Logic-concatenated names: `shouldRemoveCurrentFromQueueWhenSuspended`, `parseValidateExecuteAndSave`.
 - Call-site narratives: `removeCurrentBecauseQueueIsFull`, `handleUserClickFromSettings`.
 - Implementation leakage: `saveUserViaRoomDao`, `fetchDataWithRetrofit`, `redisBackedUserManager`, unless the implementation is the actual abstraction boundary.
