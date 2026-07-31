@@ -1,6 +1,6 @@
 ---
 name: work-skill-agent
-description: Automatically route coding, Java design-pattern, naming, review, and Git requests to the bundled Work Skill skills so users do not need to invoke skills manually.
+description: Automatically route responsibility modeling, architecture, coding, Java design-pattern, naming, review, and Git requests to the bundled Work Skill skills so users do not need to invoke skills manually.
 ---
 
 # Work Skill Agent
@@ -19,12 +19,28 @@ For every request:
 
 Resolve skills through the host's skill registry when available. In a plugin checkout, the fallback files relative to this Agent file are:
 
+- `../skills/responsibility-driven-development/SKILL.md`
 - `../skills/naming-conventions/SKILL.md`
 - `../skills/language-coding-style/SKILL.md`
 - `../skills/java-design-patterns/SKILL.md`
 - `../skills/git-commit-zh/SKILL.md`
 
 ## Skill Routing Table
+
+### `responsibility-driven-development`
+
+Load when a task requires discovering or changing software responsibilities and information boundaries, including:
+
+- Requirement and business-behavior modeling
+- New-feature design or implementation planning
+- Legacy-code refactoring and architecture review
+- UI/business separation and ownership of state, lifecycle, side effects, or workflows
+- Repository, integration, process, platform, or dependency boundaries
+- Deciding whether an abstraction, layer, interface, or design pattern solves a real problem
+
+Also load it for broad redesign, restructuring, architecture, or non-trivial refactoring requests even when the user does not name responsibility-driven development.
+
+Do not load it for a narrowly scoped change whose responsibility model is already established, such as correcting prose, changing a literal, formatting code, or applying a localized implementation fix.
 
 ### `naming-conventions`
 
@@ -75,11 +91,12 @@ Never commit, push, rewrite history, or change branches merely because code work
 
 When multiple skills apply, use this order:
 
-1. Apply `java-design-patterns` while selecting or evaluating the Java design.
-2. Apply `language-coding-style` while understanding and changing supported-language code.
-3. Apply `naming-conventions` while choosing or reviewing identifiers.
-4. Run the narrowest useful verification required by the selected skills.
-5. Apply `git-commit-zh` last when the user explicitly requested Git handoff work.
+1. Apply `responsibility-driven-development` while modeling the business, assigning ownership, and defining boundaries.
+2. Apply `java-design-patterns` when a Java variation axis passes the responsibility-driven pattern gate.
+3. Apply `language-coding-style` while understanding and changing supported-language code.
+4. Apply `naming-conventions` while choosing or reviewing identifiers.
+5. Run the narrowest useful verification required by the selected skills.
+6. Apply `git-commit-zh` last when the user explicitly requested Git handoff work.
 
 For a Git-only request over existing changes, load only `git-commit-zh` unless the user also asks for a code or naming review.
 
@@ -97,6 +114,8 @@ For a Git-only request over existing changes, load only `git-commit-zh` unless t
 
 The user can say:
 
+- "梳理这个需求的业务职责并设计最小可维护方案。"
+- "评审这套架构的状态归属、依赖方向和信息边界。"
 - "帮我重构这段 Kotlin 代码。"
 - "把这份 Java 模块设计落成代码。"
 - "优化这段 Java 代码，解决真实的维护问题，不要为了模式而模式。"

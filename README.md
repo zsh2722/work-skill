@@ -6,6 +6,7 @@
 
 | Skill | Purpose |
 | --- | --- |
+| `responsibility-driven-development` | 从业务行为、职责归属和信息边界出发设计、实现、评审或渐进式重构最小可维护架构。 |
 | `naming-conventions` | 审查和改进标识符命名，避免含义模糊、过度描述或实现细节泄漏。 |
 | `language-coding-style` | 对 C、C++、Java、Kotlin、Dart、Go 和 Python 应用实用的编码与命名规范。 |
 | `java-design-patterns` | 面向真实问题将 Java 设计落地、重构和优化；评估后只采用确有收益的 GoF 模式或现代 Java 实现。 |
@@ -20,10 +21,10 @@
 Agent 定义位于 `agents/work-skill-agent.md`，采用 Markdown + YAML frontmatter 格式。支持插件内 Agent 的宿主工具可以在安装后选择 `work-skill-agent`，之后直接描述目标即可：
 
 ```text
-帮我选择合适的设计模式重构这段 Java 代码，检查命名，验证后按中文规范提交。
+帮我梳理这个需求的业务职责，设计最小可维护方案，落地 Java 代码并按中文规范提交。
 ```
 
-Agent 会按任务自动加载最小必要 Skill，并依次完成编码规范、命名检查、验证和明确授权的 Git 操作。具体规则仍由各自的 `SKILL.md` 维护，Agent 只负责路由与编排。
+Agent 会按任务自动加载最小必要 Skill，并依次完成职责建模、设计决策、编码规范、命名检查、验证和明确授权的 Git 操作。具体规则仍由各自的 `SKILL.md` 维护，Agent 只负责路由与编排。
 
 仅支持 Agent Skills、不支持自定义 Agent 的工具仍可安装并直接使用 `skills/`，不会受此入口影响。
 
@@ -78,6 +79,7 @@ codex plugin add work-skill@work-skill
 
 ```text
 skills/                               # 跨工具的唯一 Skill 源码
+├── responsibility-driven-development/
 ├── naming-conventions/
 ├── language-coding-style/
 ├── java-design-patterns/

@@ -1,7 +1,7 @@
 {
   "name": "work-skill",
-  "version": "0.3.0",
-  "description": "Portable Agent Skills for Java design patterns, naming, multilingual coding style, and Chinese Conventional Commits.",
+  "version": "0.4.0",
+  "description": "Portable Agent Skills for responsibility-driven development, Java design patterns, multilingual coding style, naming, and Chinese Conventional Commits.",
   "author": {
     "name": "张松河",
     "url": "https://github.com/zsh2722"
@@ -13,6 +13,9 @@
     "codex",
     "agent-skills",
     "skill",
+    "responsibility-driven-development",
+    "architecture",
+    "refactoring",
     "java",
     "design-patterns",
     "naming",
@@ -22,13 +25,14 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Work Skill",
-    "shortDescription": "跨 Agent 的 Java 设计模式、代码规范与中文 Git 工作流",
-    "longDescription": "以开放 Agent Skills 格式提供 Java 设计模式知识库、面向 C、C++、Java、Kotlin、Dart、Go 和 Python 的命名与代码规范，以及安全的中文 Conventional Commit 工作流。",
+    "shortDescription": "跨 Agent 的职责驱动设计、代码规范与中文 Git 工作流",
+    "longDescription": "以开放 Agent Skills 格式提供职责驱动的业务建模、架构设计和渐进式重构流程，Java 设计模式知识库，多语言命名与代码规范，以及安全的中文 Conventional Commit 工作流。",
     "developerName": "张松河",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://github.com/zsh2722/work-skill",
     "defaultPrompt": [
+      "Use $responsibility-driven-development to model this business problem, assign responsibilities, and design the smallest maintainable solution.",
       "Use $naming-conventions to review these identifiers and suggest clearer names.",
       "Use $language-coding-style to review this code change for style issues.",
       "Use $java-design-patterns to assess this Java design, refactoring, or optimization problem and apply a pattern only when it solves a concrete issue.",
