@@ -1,0 +1,4 @@
+interface:
+  display_name: "Responsibility-Driven Development"
+  short_description: "Design and refactor around clear responsibilities"
+  default_prompt: "Use $responsibility-driven-development to model the business, assign responsibilities, and design the smallest maintainable solution."
