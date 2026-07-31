@@ -60,6 +60,8 @@ gh skill install zsh2722/work-skill --all --agent codex --scope user
 
 ## Update
 
+仓库使用 `master` 作为稳定更新分支，`dev` 作为日常开发分支。安装和更新默认使用 `master`。
+
 通过 skills CLI 安装的用户可拉取更新：
 
 ```bash
@@ -71,7 +73,7 @@ npx skills update
 Codex 用户可选择原生 marketplace 安装：
 
 ```bash
-codex plugin marketplace add zsh2722/work-skill --ref main
+codex plugin marketplace add zsh2722/work-skill --ref master
 codex plugin add work-skill@work-skill
 ```
 
