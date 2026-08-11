@@ -1,0 +1,4 @@
+interface:
+  display_name: "Compose Adaptive UI"
+  short_description: "设计与实现跨窗口形态的 Compose 自适应 UI"
+  default_prompt: "Use $compose-adaptive-ui to design and implement an adaptive Compose screen and architecture."
