@@ -1,6 +1,6 @@
 ---
 name: compose-adaptive-ui
-description: Design, implement, refactor, or review adaptive Android UIs with Jetpack Compose across phones, tablets, foldables, freeform/desktop windows, and multi-window modes. Use for Compose UI components, app screens, navigation, canonical layouts, pane behavior, window size classes, folding features, state continuity, accessibility, testing, or modular app architecture where the UI must respond to available window space and capabilities without duplicating device-specific screens.
+description: Design, implement, or refactor adaptive Android UIs with Jetpack Compose across phones, tablets, foldables, freeform/desktop windows, and multi-window modes. Use for creating Compose UI components, app screens, navigation, canonical layouts, pane behavior, state continuity, testing strategy, or modular app architecture where the UI must respond to available window space and capabilities without duplicating device-specific screens. For legacy API migration or official-compliance audits of an existing implementation, use an adaptive-layout audit skill when available.
 ---
 
 # Compose Adaptive UI
@@ -25,8 +25,8 @@ Prefer one state model and one component vocabulary with multiple compositions. 
 - Locate the app shell, navigation, screen state owner, reusable composables, theme, dependency catalog, and tests.
 - Identify supported Compose, Material 3 Adaptive, Navigation, WindowManager, and Android versions from the project; do not guess dependency versions or copy stale API signatures.
 - Preserve the project's architecture and dependency conventions unless the task explicitly asks for a migration.
-- Read [references/adaptive-design-guide.md](references/adaptive-design-guide.md) before choosing layout policy, pane navigation, fold handling, architecture boundaries, or a test matrix.
-- Consult current official Android documentation when exact APIs, artifacts, annotations, breakpoints, or platform behavior matter.
+- Read only the relevant sections of [references/adaptive-design-guide.md](references/adaptive-design-guide.md): canonical panes/navigation for multi-pane work, foldables for hinge/posture work, architecture for module/state design, and verification for test planning.
+- Treat the stable rules and API families in this skill as the default. Consult current official Android documentation when adding/upgrading dependencies, using an experimental API, or when the project's installed API differs from this skill.
 
 ### 2. Model the experience
 
@@ -47,7 +47,17 @@ Classify state deliberately:
 
 ### 3. Derive a layout policy
 
-Use window size classes for high-level layout decisions. Use local constraints for component-level responsiveness. Add posture or separating hinge information only when it changes usability or prevents content from crossing an occlusion.
+Use window size classes for high-level layout decisions. Account for width and height; a medium-width but compact-height window may not support multiple panes. Use local constraints for component-level responsiveness. Add posture or separating hinge information only when it changes usability or prevents content from crossing an occlusion.
+
+Use the official width classes as capability breakpoints, not device labels:
+
+- Compact: `< 600dp`
+- Medium: `600–839dp`
+- Expanded: `840–1199dp`
+- Large: `1200–1599dp`
+- Extra-large: `>= 1600dp`
+
+Large and Extra-large require a supported library API. Prefer `currentWindowAdaptiveInfoV2()` in Material 3 Adaptive 1.3.0-rc01 or newer; it includes L/XL by default. Older compatible versions may use `currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true)`, which is deprecated in 1.3.0-rc01. If the project supports neither, derive additional desktop policy from explicit content constraints without redefining the official classes.
 
 Choose policy by content needs, not by a universal width table. Consider:
 
@@ -71,21 +81,31 @@ Structure code around these roles; names and module boundaries may vary:
 
 Hoist state and use unidirectional data flow. Prefer stable policy/value objects over scattered `if (width...)` checks. Keep branching near containers; keep leaf components reusable and previewable.
 
-When library support fits, consider:
+Prefer these stable official API families when their semantics fit:
 
-- `currentWindowAdaptiveInfo()` for current window information;
-- navigation-suite APIs for top-level adaptive navigation;
-- navigable list-detail or supporting-pane scaffolds for pane navigation, back behavior, and transitions;
-- adaptive grids or constraint-driven composition for feed/catalog screens;
-- WindowManager or adaptive posture/hinge data for fold-aware placement.
+- the installed version's non-deprecated adaptive-info API—prefer `currentWindowAdaptiveInfoV2()` where available—and `WindowSizeClass` for high-level window policy;
+- `NavigationSuiteScaffold` for top-level navigation bar/rail adaptation; override `layoutType` only when product semantics justify a drawer or custom navigation form;
+- `NavigableListDetailPaneScaffold` / `NavigableSupportingPaneScaffold` plus their remembered `ThreePaneScaffoldNavigator` for pane navigation, saved content keys, predictive-back transitions, and configurable `BackNavigationBehavior`;
+- their non-navigable scaffold variants when navigation state is deliberately owned elsewhere;
+- WindowManager `WindowLayoutInfo` / `FoldingFeature`, or compatible Material 3 Adaptive posture and hinge information, for fold-aware placement.
 
-Verify exact symbols against the versions present in the project and official docs before editing.
+Choose lower-level layout primitives by workload:
+
+- `Row`, `Column`, `Box`, constraints, and stable lazy lists/grids remain valid defaults.
+- Use `LazyVerticalGrid` / related lazy layouts for large homogeneous collections that require lazy loading.
+- Consider experimental `Grid` for structural two-dimensional screen/component layout; it is not lazy.
+- Consider experimental `FlexBox` for a small number of one-dimensional items that must grow, shrink, or wrap. In projects that adopt it, prefer it over `FlowRow` / `FlowColumn` for that use case.
+- Consider experimental `mediaQuery` only when dynamic posture, pointer, keyboard, hardware, or viewing-distance queries materially simplify policy. It requires explicit integration enablement.
+
+Do not introduce experimental APIs merely to appear current. Verify Compose version, artifact, opt-in annotation, and project acceptance before using `Grid`, `FlexBox`, or `mediaQuery`.
+
+Before using a version-sensitive symbol, confirm it exists and is not deprecated in the project's installed dependencies. Consult official API reference when adding/upgrading the dependency or when local APIs differ.
 
 ### 5. Validate behavior, not screenshots alone
 
 Test representative windows and transitions:
 
-- compact, medium, expanded, and any project-specific boundary values;
+- compact, medium, expanded, large, extra-large, and each enabled boundary (`600`, `840`, `1200`, `1600dp`) immediately below/at/above;
 - portrait/landscape, split screen, freeform resize, unfolded/folded states, and separating hinges when supported;
 - empty, loading, error, long text, large font, RTL, keyboard, mouse, stylus, and focus navigation where relevant;
 - selection continuity, scroll restoration, pane back behavior, deep links, and resize while a detail or editor is open.
@@ -102,6 +122,7 @@ Use focused unit tests for policy functions, Compose tests for semantics and int
 - Do not duplicate complete screens for each class. Duplicate only layout composition when reuse would damage clarity.
 - Do not let a hinge split interactive content, dialogs, media controls, or reading flow; treat separating/occluding features as spatial constraints.
 - Do not equate a successful build with an adaptive UX; verify state, back, focus, resizing, and accessibility.
+- Do not lock orientation, restrict aspect ratio, or disable resizing as an adaptation strategy. For target 36 apps in qualifying Android 16 large-screen environments, the platform can ignore these restrictions. Predictive back system animations are enabled by default only when the app targets API 36+ and runs on Android 16+; migrate legacy system-back interception.
 
 ## Expected output
 

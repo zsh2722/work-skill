@@ -2,21 +2,23 @@
 
 ## Contents
 
-1. Principles
+1. Principles and breakpoints
 2. Signals and decision levels
-3. Canonical patterns
+3. Canonical patterns and back behavior
 4. Navigation and state continuity
 5. Architecture
-6. Foldables and resizable windows
-7. Component design
+6. Foldables, Android 16, and resizable windows
+7. Component and primitive selection
 8. Verification matrix
 9. Official sources
 
-## 1. Principles
+## 1. Principles and breakpoints
 
 ### Design the window, not the device
 
-An app renders into a window that can resize during use. The same physical device can provide compact, medium, or expanded space because of split screen, freeform desktop windows, rotation, folding, or embedded contexts. Device categories are useful for product discussion and test coverage, but window conditions should drive runtime layout.
+An app renders into a window that can resize during use. The same physical device can cross Compact, Medium, Expanded, Large, and Extra-large because of split screen, freeform desktop windows, rotation, folding, or embedded contexts. Device categories are useful for product discussion and test coverage, but window conditions should drive runtime layout.
+
+Official width breakpoints are Compact `<600dp`, Medium `600–839dp`, Expanded `840–1199dp`, Large `1200–1599dp`, and Extra-large `>=1600dp`. Official height breakpoints are Compact `<480dp`, Medium `480–899dp`, and Expanded `>=900dp`. Prefer `currentWindowAdaptiveInfoV2()` in Material 3 Adaptive 1.3.0-rc01 or newer; it includes L/XL by default. The older Boolean overload can enable L/XL in compatible releases but is deprecated starting in 1.3.0-rc01.
 
 ### Adapt information architecture, not only dimensions
 
@@ -59,6 +61,15 @@ Define:
 - pane proportions and minimum usable widths.
 
 Prefer a navigable scaffold when it matches the navigation model because it coordinates pane visibility and back behavior. Use the non-navigable scaffold or a custom layout when navigation is owned elsewhere.
+
+For the official navigable scaffold, choose `BackNavigationBehavior` from product semantics rather than manually guessing pane history:
+
+- `PopUntilScaffoldValueChange` is the recommended default for most list-detail flows: single-pane detail returns to list, while multi-pane item changes do not create meaningless visual back steps.
+- `PopUntilContentChange` restores prior selected content when that history is meaningful.
+- `PopUntilCurrentDestinationChange` returns until the active pane destination changes.
+- `PopLatest` pops exactly one entry and can become unintuitive after runtime window changes; use only with an explicit reason.
+
+Use a saveable/parcelable content key supported by the installed navigator API; pass stable identifiers rather than large domain objects.
 
 ### Supporting pane
 
@@ -107,7 +118,7 @@ An optional shared adaptive module can expose project-wide policy vocabulary, wi
 
 Prefer policy objects or pure functions that can be unit tested. Avoid passing raw window information through every leaf. Pass semantic capabilities or let a local component respond to its own constraints.
 
-## 6. Foldables and resizable windows
+## 6. Foldables, Android 16, and resizable windows
 
 A foldable is not always dual pane, and dual pane is not exclusive to foldables. First choose a layout from available space; then refine placement when a fold or hinge separates or occludes usable regions.
 
@@ -122,12 +133,19 @@ Consider:
 
 Resizable desktop and multi-window modes require continuous behavior between preferred breakpoints. Check awkward intermediate sizes and very short windows, not only named device presets.
 
-## 7. Component design
+For target 36 apps running in qualifying Android 16 large-screen environments, the platform can ignore orientation, aspect-ratio, and resizability restrictions. Design edge-to-edge, resize, and all orientations as normal runtime behavior. Predictive back system animations are enabled by default only for target 36+ apps running on Android 16+; do not rely on `onBackPressed` or raw key handling to intercept system back navigation. Prefer Navigation and navigable adaptive scaffolds, and validate started/progressed/cancelled/committed behavior when custom handling is necessary.
+
+## 7. Component and primitive selection
 
 - Make leaf composables stateless where practical: data in, events out.
 - Let containers choose placement; let components choose internal wrapping from local constraints.
 - Set readable maximum widths for text-heavy content.
-- Use flexible grids, weights, flow layouts, and intrinsic content needs deliberately; avoid blanket `fillMaxWidth()` as a large-screen strategy.
+- Use `Row`, `Column`, `Box`, local constraints, and stable lazy containers as the conservative baseline.
+- Use lazy lists/grids for large homogeneous datasets requiring lazy loading.
+- Consider experimental `Grid` for structural two-dimensional layouts; it does not lazy-load.
+- Consider experimental `FlexBox` for a small number of one-dimensional items that must grow, shrink, or wrap; prefer it over `FlowRow`/`FlowColumn` only after the project accepts its experimental API.
+- Consider experimental `mediaQuery` for dynamic posture, pointer precision, keyboard kind, hardware capability, or viewing-distance conditions. It requires integration enablement and version verification.
+- Avoid blanket `fillMaxWidth()` as a large-screen strategy.
 - Maintain touch targets and also support keyboard, mouse, stylus, focus traversal, hover/context actions, and accessibility semantics when the product targets large screens.
 - Keep dialogs, menus, sheets, and drag targets within usable regions and away from occluding folds.
 
@@ -137,7 +155,7 @@ Build a task-specific matrix rather than testing every possible combination:
 
 | Axis | Representative checks |
 |---|---|
-| Width/height | Boundary values, short landscape, intermediate resize |
+| Width/height | 599/600, 839/840, 1199/1200, 1599/1600dp; height 479/480 and 899/900dp; intermediate resize |
 | Window mode | Full screen, split screen, freeform/desktop |
 | Fold | Book, tabletop, separating hinge, unfold during task |
 | State | No selection, selected detail, draft/edit, deep link, process restore |
@@ -159,5 +177,11 @@ Consult these pages for current API names, artifacts, platform behavior, and det
 - [Support different display sizes](https://developer.android.com/develop/adaptive-apps/guides/support-different-display-sizes)
 - [Make your app fold aware](https://developer.android.com/develop/adaptive-apps/guides/foldables/make-your-app-fold-aware)
 - [Adaptive do's and don'ts](https://developer.android.com/develop/adaptive-apps/guides/adaptive-dos-and-donts)
+- [Build adaptive navigation](https://developer.android.com/develop/adaptive-apps/guides/build-adaptive-navigation)
+- [App orientation, aspect ratio, and resizability](https://developer.android.com/develop/adaptive-apps/guides/app-orientation-aspect-ratio-resizability)
+- [FlexBox](https://developer.android.com/develop/adaptive-apps/guides/flexbox)
+- [Grid](https://developer.android.com/develop/adaptive-apps/guides/grid)
+- [MediaQuery](https://developer.android.com/develop/adaptive-apps/guides/mediaquery)
+- [Material 3 Adaptive API: currentWindowAdaptiveInfoV2](https://developer.android.com/reference/kotlin/androidx/compose/material3/adaptive/currentWindowAdaptiveInfoV2.composable)
 
 Official guidance evolves. Treat examples and dependency coordinates as version-sensitive; verify them against the project's dependency graph and the latest Android documentation before implementation.
