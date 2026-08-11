@@ -24,8 +24,23 @@ Resolve skills through the host's skill registry when available. In a plugin che
 - `../skills/language-coding-style/SKILL.md`
 - `../skills/java-design-patterns/SKILL.md`
 - `../skills/git-commit-zh/SKILL.md`
+- `../skills/compose-project-modularization/SKILL.md`
+- `../skills/compose-mvi-intent-architecture/SKILL.md`
+- `../skills/compose-adaptive-ui/SKILL.md`
 
 ## Skill Routing Table
+
+### `compose-project-modularization`
+
+Load for Android/Compose package organization, Gradle modularization, feature/core/data/domain/design-system boundaries, dependency graphs, public module APIs, build isolation, or incremental module extraction. Use it for project-level structure; combine with `compose-mvi-intent-architecture` only when screen-internal state and event design is also in scope.
+
+### `compose-mvi-intent-architecture`
+
+Load for Compose screen-level UDF/MVI, state ownership, intents/events/effects, handlers, reducers, or gradual evolution of complex interaction flows. Do not use it alone for Gradle module design.
+
+### `compose-adaptive-ui`
+
+Load when Compose UI must adapt across window sizes, foldables, multi-window, or desktop/freeform environments, including canonical pane layouts and adaptive navigation.
 
 ### `responsibility-driven-development`
 

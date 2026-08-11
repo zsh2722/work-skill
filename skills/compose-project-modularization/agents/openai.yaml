@@ -1,0 +1,4 @@
+interface:
+  display_name: "Compose Project Modularization"
+  short_description: "Design scalable Compose package and Gradle module boundaries"
+  default_prompt: "Use $compose-project-modularization to review this Compose project structure and propose an incremental modularization plan."
