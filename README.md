@@ -11,9 +11,9 @@
 | `language-coding-style` | 对 C、C++、Java、Kotlin、Dart、Go 和 Python 应用实用的编码与命名规范。 |
 | `java-design-patterns` | 面向真实问题将 Java 设计落地、重构和优化；评估后只采用确有收益的 GoF 模式或现代 Java 实现。 |
 | `git-commit-zh` | 安全地拆分、提交并推送变更，使用中文 Conventional Commit 消息。 |
-| `compose-project-modularization` | 评审并渐进设计 Compose 项目的包结构、Gradle 模块边界、公开 API 与依赖方向。 |
-| `compose-mvi-intent-architecture` | 结合具体上下文演进 Compose 屏幕的 MVI/UDF、状态、事件与副作用设计。 |
-| `compose-adaptive-ui` | 为手机、平板、折叠屏与可调整窗口设计和实现自适应 Compose UI。 |
+| `compose-modularization` | 评审并渐进设计 Compose 项目的包结构、Gradle 模块边界、公开 API 与依赖方向。 |
+| `compose-mvi` | 结合具体上下文演进 Compose 屏幕的 MVI/UDF、状态、事件与副作用设计。 |
+| `compose-adaptive` | 为手机、平板、折叠屏与可调整窗口设计和实现自适应 Compose UI。 |
 
 ## Included Agent
 
@@ -88,9 +88,9 @@ skills/                               # 跨工具的唯一 Skill 源码
 ├── naming-conventions/
 ├── language-coding-style/
 ├── java-design-patterns/
-├── compose-project-modularization/
-├── compose-mvi-intent-architecture/
-├── compose-adaptive-ui/
+├── compose-modularization/
+├── compose-mvi/
+├── compose-adaptive/
 └── git-commit-zh/
 agents/
 └── work-skill-agent.md               # 自动路由并编排上述 Skill

@@ -1,9 +1,9 @@
 ---
-name: compose-adaptive-ui
+name: compose-adaptive
 description: Design, implement, or refactor adaptive Android UIs with Jetpack Compose across phones, tablets, foldables, freeform/desktop windows, and multi-window modes. Use for creating Compose UI components, app screens, navigation, canonical layouts, pane behavior, state continuity, testing strategy, or modular app architecture where the UI must respond to available window space and capabilities without duplicating device-specific screens. For legacy API migration or official-compliance audits of an existing implementation, use an adaptive-layout audit skill when available.
 ---
 
-# Compose Adaptive UI
+# Compose Adaptive
 
 ## Core stance
 

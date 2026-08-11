@@ -1,9 +1,9 @@
 ---
-name: compose-mvi-intent-architecture
+name: compose-mvi
 description: Think through, review, and evolve Jetpack Compose screen architecture using MVI, UDF, state holders, events, intents, reducers, and handlers as adaptable design tools. Use for Kotlin/Android/Compose work when event definitions, state handling, ViewModels, or feature boundaries have become difficult to understand; when deciding whether to group, split, simplify, or retain an existing Intent design; or when planning gradual architecture improvements without imposing a rigid framework or disruptive rewrite.
 ---
 
-# Compose MVI Architecture Thinking
+# Compose MVI
 
 Use MVI and UDF as ways to reason about change, ownership, and information flow—not as templates that every screen must resemble.
 

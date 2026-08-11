@@ -1,0 +1,4 @@
+interface:
+  display_name: "Compose MVI"
+  short_description: "以适应性原则思考并演进 Compose MVI 架构"
+  default_prompt: "使用 $compose-mvi 分析当前 Compose MVI 页面，并结合业务与团队上下文提出灵活的演进方向。"

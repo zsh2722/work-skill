@@ -1,9 +1,9 @@
 ---
-name: compose-project-modularization
+name: compose-modularization
 description: Design, review, or evolve package structure, Gradle module boundaries, public APIs, and dependency direction for Android projects that use Jetpack Compose. Use when code is hard to find, features span technical-layer packages, shared UI or utilities are growing, feature/core/data/domain/design-system modules are being considered, build or team boundaries need improvement, or a project needs an incremental modularization plan without copying Now in Android as a fixed template.
 ---
 
-# Compose Project Modularization
+# Compose Modularization
 
 Treat directories and Gradle modules as tools for ownership, isolation, and change—not as proof of architectural maturity. Compose affects UI composition, but it does not determine one project structure.
 
@@ -60,7 +60,7 @@ Keep feature-local code local. Start with the shallowest structure that remains 
 
 Group by cohesive capability or screen when technical-type folders force one change across many distant locations. Introduce `ui`, `navigation`, `data`, or similar subpackages only when each contains enough related code and its ownership is clear.
 
-Do not require every feature to contain `repository`, `domain`, `state`, `event`, `effect`, or `di` packages. Repositories normally represent data domains and may be shared by features. State/event/effect shapes belong to the screen architecture decision; use `$compose-mvi-intent-architecture` when that is the actual problem.
+Do not require every feature to contain `repository`, `domain`, `state`, `event`, `effect`, or `di` packages. Repositories normally represent data domains and may be shared by features. State/event/effect shapes belong to the screen architecture decision; use `$compose-mvi` when that is the actual problem.
 
 Avoid broad names such as `utils`, `common`, `base`, and `extensions`. Name shared code by the capability or policy it provides, and keep one-off helpers near their caller.
 
