@@ -14,6 +14,7 @@
 | `compose-modularization` | 评审并渐进设计 Compose 项目的包结构、Gradle 模块边界、公开 API 与依赖方向。 |
 | `compose-mvi` | 结合具体上下文演进 Compose 屏幕的 MVI/UDF、状态、事件与副作用设计。 |
 | `compose-adaptive` | 为手机、平板、折叠屏与可调整窗口设计和实现自适应 Compose UI。 |
+| `android-single-module-clean-architecture` | 适用于 2-3 人 Android 小团队的单 Module + 包内 Clean (Feature-First) 架构设计与落地。 |
 
 ## Included Agent
 
@@ -91,6 +92,7 @@ skills/                               # 跨工具的唯一 Skill 源码
 ├── compose-modularization/
 ├── compose-mvi/
 ├── compose-adaptive/
+├── android-single-module-clean-architecture/
 └── git-commit-zh/
 agents/
 └── work-skill-agent.md               # 自动路由并编排上述 Skill

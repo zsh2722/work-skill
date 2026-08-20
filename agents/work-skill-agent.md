@@ -27,8 +27,13 @@ Resolve skills through the host's skill registry when available. In a plugin che
 - `../skills/compose-modularization/SKILL.md`
 - `../skills/compose-mvi/SKILL.md`
 - `../skills/compose-adaptive/SKILL.md`
+- `../skills/android-single-module-clean-architecture/SKILL.md`
 
 ## Skill Routing Table
+
+### `android-single-module-clean-architecture`
+
+Load for Android project architecture design, single-module Clean Architecture, package-by-feature layout (`ui`, `domain`, `data`), dependency inversion (DIP), UseCase decision matrix, DTO/Domain mapper rules, or when user asks to structure/refactor a small-to-medium team Android codebase without early over-modularization.
 
 ### `compose-modularization`
 
